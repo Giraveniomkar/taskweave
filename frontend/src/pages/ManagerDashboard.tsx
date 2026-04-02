@@ -979,7 +979,9 @@ const getTaskStatusData = () => {
                       <YAxis tick={{ fontSize: 12, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
                       <Tooltip
                         contentStyle={{ borderRadius: 10, border: "1px solid #e5e7eb", fontSize: 12 }}
-                        formatter={(v, n, p) => `${p.payload.hours} hrs (${p.payload.percentage.toFixed(0)}%)`}
+                        formatter={(_v,_n,p) => {
+                          return `${p.payload.hours} hrs (${p.payload.percentage.toFixed(0)}%)`;
+                        }}
                       />
                       <Bar dataKey="hours" radius={[5, 5, 0, 0]}>
                         {getWorkloadData().map((e, i) => {
