@@ -90,7 +90,7 @@ router.post("/recommend", authMiddleware, async (req, res) => {
         }));
 
         const response = await axios.post(
-            "http://127.0.0.1:8000/recommend",
+            "https://taskweave-ai.onrender.com/recommend",
             {
                 requiredSkills,
                 members: formattedMembers
