@@ -56,6 +56,7 @@ export default function ManagerDashboard() {
 const [memberEmail, setMemberEmail] = useState("");
 const [memberPassword, setMemberPassword] = useState("");
 const [memberSkills, setMemberSkills] = useState("");
+const[loading,setLoading] = useState(true);
 
 const[projectLink, setProjectLink] = useState("");
 //const [showDropdown, setShowDropdown] = useState(false);
@@ -69,7 +70,18 @@ const initials = userName
   .toUpperCase()
   .slice(0, 2);
 
-  const token = sessionStorage.getItem("token");
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (!storedToken) {
+    alert("Please login as manager");
+    navigate("/login");
+    
+  }
+  else {
+    setLoading(false);
+  }
+  }, []);
+
   const managerName = sessionStorage.getItem("name") || "Manager";
   const managerInitials = managerName
     .split(" ")
@@ -97,7 +109,7 @@ const initials = userName
 
  const loadTasks = async () => {
   const res = await fetch(`${API_URL}/api/task`, {
-    headers: { Authorization: token || "" }
+    headers: { Authorization: sessionStorage.getItem("token") || "" }
   });
   const data = await res.json();
   setTasks(Array.isArray(data) ? data : []);
@@ -105,7 +117,7 @@ const initials = userName
 
 const loadMembers = async () => {
   const res = await fetch(`${API_URL}/api/member`, {
-    headers: { Authorization: token || "" }
+    headers: { Authorization: sessionStorage.getItem("token") || "" }
   });
   const data = await res.json();
   setMembers(Array.isArray(data) ? data : []);
@@ -120,7 +132,7 @@ const loadMembers = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token || ""
+        Authorization: sessionStorage.getItem("token") || ""
       },
       body: JSON.stringify({
         requiredSkills: skills.split(",").map(s => s.trim())
@@ -140,7 +152,7 @@ const loadMembers = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token || ""
+        Authorization: sessionStorage.getItem("token") || ""
       },
       body: JSON.stringify({
         title,
@@ -164,7 +176,7 @@ const loadMembers = async () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token || ""
+        Authorization: sessionStorage.getItem("token") || ""
       },
       body: JSON.stringify({
         title,
@@ -205,17 +217,13 @@ const loadMembers = async () => {
   const createMember = async () => {
   const token = sessionStorage.getItem("token");
 
-  if (!token) {
-    alert("Please login as manager");
-    navigate("/login");
-    return;
-  }
+
 
   const res = await fetch(`${API_URL}/api/member/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token
+      Authorization: token || ""
     },
     body: JSON.stringify({
       name: memberName,
@@ -281,6 +289,8 @@ const getTaskStatusData = () => {
         ? recMemberObj.skills.map((s: any) => typeof s === "string" ? s : s?.name || s?.skill || "").filter(Boolean)
         : [])
     : [];
+
+    if(loading) return null;
 
   return (
     <>

@@ -25,6 +25,18 @@ export default function TeamMemberDashboard() {
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
+  const[loading,setLoading] = useState(true);
+
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("token");
+    if (!storedToken) { 
+      alert("Please login as team member");
+      navigate("/login");
+    }
+    else {
+      setLoading(false);
+    }
+  }, []);
 
   const token = sessionStorage.getItem("token");
   const memberName = sessionStorage.getItem("name") || "Team Member";
@@ -76,6 +88,8 @@ export default function TeamMemberDashboard() {
   const completedCount = tasks.filter(t => t.status === "completed").length;
   const pendingCount = tasks.filter(t => t.status !== "completed").length;
   const progressPct = tasks.length > 0 ? Math.round((completedCount / tasks.length) * 100) : 0;
+
+if(loading) return null;
 
   return (
     <>
