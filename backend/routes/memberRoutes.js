@@ -58,7 +58,7 @@ router.post('/login', async(req,res) => {
         "taskweave_secret"
     );
 
-    res.json({token,id: member._id});
+    res.json({token,id: member._id, name: member.name});
 });
 
 

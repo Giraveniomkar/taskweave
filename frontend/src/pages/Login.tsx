@@ -40,9 +40,11 @@ export default function Login() {
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem("role", selectedRole);
       sessionStorage.setItem("userId", data.id);
+      sessionStorage.setItem("name", data.name);
 
       console.log("TOKEN:", data.token);
       console.log("ROLE:", selectedRole);
+      console.log("name", data.name);
 
       navigate("/dashboard");
     } catch (err) {

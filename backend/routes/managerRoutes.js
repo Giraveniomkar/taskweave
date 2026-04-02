@@ -40,6 +40,7 @@ router.post('/login', async(req,res) => {
     res.json({
         token,
         id: manager._id,
+        name: manager.name,
     });
 });
 
