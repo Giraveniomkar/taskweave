@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 export default function Login() {
 
@@ -40,7 +43,10 @@ export default function Login() {
       sessionStorage.setItem("userId", data.id);
       //sessionStorage.setItem("name", data.name);
 
-      window.location.href = "/dashboard";
+      console.log("TOKEN:", data.token);
+      console.log("ROLE:", selectedRole);
+
+    navigate("/dashboard")
     } catch (err) {
       setError("Server error. Please try again.");
     } finally {
