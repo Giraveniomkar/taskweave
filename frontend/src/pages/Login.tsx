@@ -6,7 +6,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState<"manager" | "team_member">("team_member");
+  const [selectedRole, setSelectedRole] = useState<"manager" | "team_member">("manager");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
