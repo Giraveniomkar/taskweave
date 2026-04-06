@@ -37,10 +37,10 @@ export default function Login() {
         return;
       }
 
-      sessionStorage.setItem("token", data.token);
-      sessionStorage.setItem("role", selectedRole);
-      sessionStorage.setItem("userId", data.id);
-      sessionStorage.setItem("name", data.name);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", selectedRole);
+      localStorage.setItem("userId", data.id);
+      localStorage.setItem("name", data.name);
 
       console.log("TOKEN:", data.token);
       console.log("ROLE:", selectedRole);
