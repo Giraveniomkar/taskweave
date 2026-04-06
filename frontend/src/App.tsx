@@ -12,34 +12,33 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 
 function App() {
   return (
-  
-      <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
+    <Routes>
 
-        <Route path="/login" element={<Login />} />
+      {/* ✅ Single root route */}
+      <Route
+        path="/"
+        element={
+          sessionStorage.getItem("token")
+            ? <Navigate to="/dashboard" replace />
+            : <Navigate to="/login" replace />
+        }
+      />
 
-        <Route path="/register" element={<Register />} />
+      {/* Auth routes */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+      {/* Protected route */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-        <Route
-          path="/"
-          element={
-            sessionStorage.getItem("token")
-              ? <Navigate to="/dashboard" replace />
-              : <Navigate to="/login" replace />
-          }
-        />
-
-      </Routes>
-    
+    </Routes>
   );
 }
 
