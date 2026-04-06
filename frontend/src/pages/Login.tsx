@@ -30,6 +30,8 @@ export default function Login() {
       });
 
       const data = await response.json();
+      console.log("LOGIN RESPONSE:", data);
+
 
       if (!response.ok) {
         setError(data.error || "Login failed");
@@ -37,10 +39,19 @@ export default function Login() {
         return;
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", selectedRole);
-      localStorage.setItem("userId", data.id);
-      localStorage.setItem("name", data.name);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("role", selectedRole);
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("name", data.name);
+      } else {
+        console.log("❌ No token received:", data);
+        setError("Login failed - no token");
+        return;
+      }
+
+      
 
       console.log("TOKEN:", data.token);
       console.log("ROLE:", selectedRole);
