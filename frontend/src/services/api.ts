@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5000"; 
+const API_URL =  "https://taskweave-backend-59rl.onrender.com"; 
 // 👉 After deployment, change to your Render URL
 
 // ================= LOGIN =================
